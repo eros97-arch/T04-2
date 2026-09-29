@@ -1,65 +1,76 @@
 const createBarChart = (data) => {
 
-    const viewW = 500, viewH = 1600;
+    // --- Sizes (logical vs. display) ---
+    const viewW = 500;
+    const viewH = Math.max(220, data.length * 28);
 
-    const displayW = 640, displayH = 420;
+    const displayW = 640;
+    const displayH = Math.min(480, data.length * 24 + 40);
 
+    // --- SVG root ---
     const svg = d3.select(".responsive-svg-container")
         .append("svg")
         .attr("viewBox", `0 0 ${viewW} ${viewH}`)
         .attr("width", displayW)
         .attr("height", displayH)
-        .style("border", "1px solid black");
+        .style("border", "1px solid #ccc");
 
 
-    // x scale (numeric)
+    // --- Scales (from T04-6) ---
     const xMax = d3.max(data, d => d.count);
 
     const xScale = d3.scaleLinear()
         .domain([0, xMax])
         .range([0, viewW]);
 
-
-    // Create a band scale for the categorical y-axis
     const yScale = d3.scaleBand()
-
-        // Extract all brand names and use them as categories
         .domain(data.map(d => d.brand))
-
-        // Distribute the categories from the top to the bottom of the SVG
         .range([0, viewH])
-
-        // Add space between neighbouring bars
         .paddingInner(0.2)
-
-        // Add space before the first bar and after the last bar
         .paddingOuter(0.1);
 
 
-    // Bars
-    svg.selectAll("rect")
+    // --- NEW in T04-7: group per row ---
+    // Using x = 100 so labels align at 100
+    // and bars start there too.
+    const labelX = 100;
 
-        // Connect the dataset to the rectangles
+    const barAndLabel = svg
+        .selectAll("g")
         .data(data)
+        .join("g")
+        .attr("transform", d => `translate(0, ${yScale(d.brand)})`);
 
-        // Create rectangles for data and update existing rectangles
-        .join("rect")
 
-        // Assign a general class and a count-specific class to each bar
-        .attr("class", d => `bar bar-${d.count}`)
-
-        // Start every bar from the left edge of the SVG
-        .attr("x", 0)
-
-        // Position each bar vertically according to its brand
-        .attr("y", d => yScale(d.brand))
-
-        // Convert each count into a scaled bar width
+    // --- Bar rectangle inside the group ---
+    // y is 0 because the group sets vertical position
+    // via transform.
+    barAndLabel
+        .append("rect")
+        .attr("x", labelX)
+        .attr("y", 0)
         .attr("width", d => xScale(d.count))
-
-        // Use the height calculated by the band scale
         .attr("height", yScale.bandwidth())
-
-        // Set the colour of the bars
         .attr("fill", "steelblue");
+
+
+    // --- Category text (left of bar, right-aligned at x=100) ---
+    barAndLabel
+        .append("text")
+        .text(d => d.brand)
+        .attr("x", labelX)
+        .attr("y", 15)
+        .attr("text-anchor", "end")
+        .style("font-family", "sans-serif")
+        .style("font-size", "13px");
+
+
+    // --- Value text (at the end of each bar) ---
+    barAndLabel
+        .append("text")
+        .text(d => d.count)
+        .attr("x", d => labelX + xScale(d.count) + 4)
+        .attr("y", 12)
+        .style("font-family", "sans-serif")
+        .style("font-size", "13px");
 };

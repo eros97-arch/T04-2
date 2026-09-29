@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,84 +27,24 @@
         </nav>
     </header>
 
-    <body>
-...
-</header>
-<h1>Appliance Energy Consumption</h1>
-<div id="content"></div>
-<!-- Give the SVG a size so shapes can be seen -->
-<svg width="300" height="150"></svg>
-<!-- Load D3 first, then your D3 code file -->
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="energy-d3.js"></script>
-</body>
 
-    <main>
+    <h1>Appliance Energy Consumption</h1>
 
-        <section class="hero">
-            <h1>Appliance Energy Consumption</h1>
+    <div id="content"></div>
 
-            <p>
-                Explore energy consumption information for household
-                appliances in the Australian market.
-            </p>
+    <!-- NEW: Container for T04-3 chart -->
+    <div class="responsive-svg-container"></div>
 
-            <a href="televisions.html" class="button">
-                Explore Televisions
-            </a>
-        </section>
 
-        <section class="content">
-            <h2>Understanding Energy Consumption</h2>
+    <!-- D3 library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 
-            <p>
-                Household appliances contribute to electricity consumption
-                in homes. Understanding how much energy appliances use can
-                help consumers make more informed decisions.
-            </p>
+    <!-- NEW: T04-3 JavaScript -->
+    <script src="t04-3bars.js"></script>
 
-            <div class="cards">
-
-                <div class="card">
-                    <h3>Energy Usage</h3>
-                    <p>
-                        Learn about the electricity consumption of
-                        different appliances.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <h3>Australian Market</h3>
-                    <p>
-                        Explore placeholder information relating to
-                        appliance energy consumption in Australia.
-                    </p>
-                </div>
-
-                <div class="card">
-                    <h3>Data Visualisation</h3>
-                    <p>
-                        Future tasks will use this website to display
-                        interactive data visualisations.
-                    </p>
-                </div>
-
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <p>
-            &copy; 2026 Awang Syahrul AkmalBin Awang Kasti | Appliance Energy Australia
-        </p>
-
-        <p>
-            GenAI was used to assist with the development of this website.
-        </p>
-    </footer>
-
-    <script src="js/script.js"></script>
+    <!-- OLD T04-2 demo temporarily disabled -->
+    <!-- <script src="energy-d3.js"></script> -->
 
 </body>
+
 </html>

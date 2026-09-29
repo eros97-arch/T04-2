@@ -144,3 +144,11 @@ footer p {
     display: block;
     margin: 0 auto;
 }
+
+/* T04-3 Responsive SVG */
+
+.responsive-svg-container {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+}
